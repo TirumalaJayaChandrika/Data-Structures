@@ -1,0 +1,139 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+}*newnode,*head=NULL,*tail=NULL,*temp;
+void create(){
+    int n;
+    printf("enter the range of elements\n");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        int value;
+        printf("enter value: ");
+        scanf("%d",&value);
+        newnode=(int *)malloc(sizeof(int));
+        newnode->data=value;
+        newnode->next=NULL;
+        if(head==NULL){
+            head=newnode;
+            tail=newnode;
+        }else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+    }
+}
+void display(){
+    temp=head;
+    printf("your list is  ");
+    while(temp!=NULL){
+        printf("%d  ",temp->data);
+        temp=temp->next;
+    }
+}
+void insert_at_beg(){
+    newnode=(int *)malloc(sizeof(int));
+    int val;
+    printf("enter value :");
+    scanf("%d",&val);
+    newnode->data=val;
+    newnode->next=head;
+    head=newnode;
+}
+void insert_at_end(){
+    newnode=(int *)malloc(sizeof(int));
+    int val;
+    printf("enter value :");
+    scanf("%d",&val);
+    newnode->data=val;
+    newnode->next=NULL;
+    tail->next=newnode;
+    tail=newnode;
+}
+void insert_at_pos(){
+    newnode=(int *)malloc(sizeof(int));
+    int val,pos;
+    printf("enter value :");
+    scanf("%d",&val);
+    printf("enter position");
+    scanf("%d",&pos);
+    temp=head;
+    newnode->data=val;
+    for(int i=1;i<pos-1;i++){
+        temp=temp->next;
+    }
+    newnode->next=temp->next;
+    temp->next=newnode;
+}
+void delete_at_beg(){
+    temp=head->next;
+    head->next=NULL;
+    head=temp;
+}
+void delete_at_end(){
+    temp=head;
+    while(temp->next->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=NULL;
+    tail=temp;
+}
+void delete_at_pos(){
+    temp=head;
+    int pos;
+    printf("enter position to delete\n");
+    scanf("%d",&pos);
+    for(int i=1;i<pos-1;i++){
+        temp=temp->next;
+    }
+    temp->next=temp->next->next;
+}
+void reverse(){
+    struct node *temp1=NULL,*temp2;
+    while(head!=NULL){
+        temp2=head->next;
+        head->next=temp1;
+        temp1=head;
+        head=temp2;
+    }
+    head=temp1;
+}
+void main(){
+    int a;
+   
+    while(1){
+    printf("menu \n1:create\n2:display\n3:delete_at_beg\n4:delete_at_beg\n5:delete_at_pos\n6:insert_at_beg\n7:insert_at_end\n8:insert_at_pos\n9:revrese\n else exit\n");
+    
+    printf("enter number: ");
+    scanf("%d",&a);
+    if(a>9)
+    break;
+    switch(a){
+        case 1: create();
+                break;
+        case 2: display();
+                break;
+        case 3: delete_at_beg();
+                break;
+        case 4: delete_at_end();
+                break;
+        case 5: delete_at_pos();
+                break;
+        case 6: insert_at_beg();
+                break;
+        case 7: insert_at_end();
+                break;
+        case 8: insert_at_pos();
+                break;
+        case 9: reverse();
+                break;
+                
+    }
+    
+    }
+    
+    
+    
+    
+}
