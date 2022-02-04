@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+        int data;
+        struct node* next;
+}*newnode,*head[10]={NULL},*tail,*temp;
+int hashcode(int key){
+        return (key%10);
+}
+void create(){
+        int n;
+        printf("enter range of elements\n");
+        scanf("%d",&n);
+        int value;
+        for(int i=0;i<n;i++){
+                printf("enter value\n");
+                scanf("%d",&value);
+                newnode=(struct node*)malloc(sizeof(struct node*));
+                newnode->data=value;
+                newnode->next=NULL;
+                int h=hashcode(value);
+                if(head[h]==NULL){
+                        head[h]=newnode;
+
+                }
+                else{
+                        tail=head[h];
+                        while(tail->next!=NULL){
+                                tail=tail->next;
+                        }
+                        tail->next=newnode;
+                }
+        }
+}
+void search(int dt){
+           int a=hashcode(dt);
+        temp=head[a];
+        int c=0;
+        while(temp!=NULL){
+                if(temp->data==dt){
+                        c++;
+                        printf("element is found\n");
+                        break;
+                }
+                temp=temp->next;
+        }
+        if(c==0){
+        printf("element was not found\n");
+        }
+}
+
+void main(){
+        create();
+        int s;
+        printf("enter element to search\n");
+        scanf("%d",&s);
+        search(s);
+}
