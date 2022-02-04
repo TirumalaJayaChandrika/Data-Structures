@@ -54,7 +54,7 @@ void infix_to_postfix(char* infix, char* postfix){
                 }
                 else if(is_operator(item)==1){
                         char x= pop();
-                       while(is_operator(x) == 1 && precedence(x) > precedence(item){   
+                       while(is_operator(x) == 1 && precedence(x) > precedence(item)){   
                             postfix[j++] = x;
                                 x = pop();
                         }
