@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+        int data;
+        struct node *next;
+}*head,*newnode,*tail,*temp;
+void push(){
+        newnode = (struct node*)malloc(sizeof(struct node));
+        int a;
+        printf("enter value to push into the stack:");
+        scanf("%d",&a);
+        newnode->data=a;
+        newnode->next=NULL;
+        if(head==NULL){
+                head=newnode;
+        }
+        else{
+                newnode->next=head;
+                head=newnode;
+        }
+}
+void pop(){
+        temp=head;
+        if(head==NULL){
+                printf("eelement cannot be poped");
+        }
+        else{
+        printf("your poped element is :%d\n",head->data);
+        head=head->next;
+         temp->next=NULL;
+        }
+}
+void display(){
+        temp=head;
+        printf("your list is\t");
+        while(temp!=NULL){
+                printf("%d ",temp->data);
+                temp=temp->next;
+        }
+}
+void main(){
+        int c=1;
+         printf("menu:\n 1:push\n2:pop\n3:display\n4:exit\n");
+         printf("enter any number:");
+         scanf("%d",&c);
+        while(c<4){
+                switch(c){
+                        case 1 : push();
+                                 break;
+                        case 2 : pop();
+                                 break;
+                        case 3 : display();
+                                 break;
+                        default :break;
+                }
+                 printf("menu:\n 1:push\n2:pop\n3:display\n4:exit\n");
+                 printf("enter any number:");
+                 scanf("%d",&c);
+        }
+}
