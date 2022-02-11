@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<math.h>
+int ch[50];
+int top=-1;
+void push(int c){
+        if(top==49){
+                printf("stack is full\n");
+        }
+        else{
+                ch[++top]=c;
+        }
+}
+int pop(){
+        int c;
+        if(top==-1){
+                printf("stack is empty\n");
+        }
+        else{
+                 c=ch[top];
+                top--;
+        }
+        return c;
+}
+void postfix_eval(char postfix[]){
+        int a,b,val;
+        char item;
+
+        for(int i=0;postfix[i]!=')';i++){
+        item=postfix[i];
+                if( isdigit(item))
+                push(item-'0');
+
+                else if(item=='+' ||item=='-'|| item=='*' || item == '/' || item =='^' || item == '%')
+                {
+                        a=pop();
+                        b=pop();
+                        if(item=='+')
+                        val=a+b;
+
+                        else if(item=='-')
+                        val=a-b;
+
+                        else if(item=='*')
+                        val=a*b;
+                        else if(item=='/')
+                        val=a/b;
+                        else if(item=='%')
+                        val=a%b;
+                        else;
+                }
+                else;
+                push(val);
+        }
+
+        }
+
+void main(){
+ char postfix[15];
+        printf("enter postfix expression:");
+        gets(postfix);
+        postfix_eval(postfix);
+        printf("%d",pop());
+
+}
