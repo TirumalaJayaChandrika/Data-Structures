@@ -39,7 +39,7 @@ void postfix_eval(char postfix[]){
                         val=a+b;
 
                         else if(item=='-')
-                        val=a-b;
+                        val=b-a;
 
                         else if(item=='*')
                         val=a*b;
@@ -48,16 +48,16 @@ void postfix_eval(char postfix[]){
                         else if(item=='%')
                         val=a%b;
                         else;
+                        push(val);
                 }
-                else;
-                push(val);
+                
         }
 
         }
 
 void main(){
  char postfix[15];
-        printf("enter postfix expression:");
+        printf("enter postfix expression with end ):");
         gets(postfix);
         postfix_eval(postfix);
         printf("%d",pop());
