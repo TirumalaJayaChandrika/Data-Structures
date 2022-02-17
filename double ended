@@ -1,0 +1,41 @@
+#include<stdio.h>
+#define n 10
+int arr[n];
+int front=0,rear=0;
+void enqueue_rear(int x){
+    if(front==0 && rear==n-1 || front==rear+1)
+    printf("stack is full");
+    else if(front==0 && rear==0){
+    arr[rear++]=x;
+    }
+    else if(rear==n-1){
+    rear=0;
+    arr[rear++]=x;
+    }
+    else{
+        arr[rear++]=x;
+    }
+    
+}
+void dequeue_front(){
+    if(front==0 && rear==0 || front==rear){
+        printf("empty");
+    }
+}
+void display(){
+    printf("\nur array is:");
+    while(front<rear){
+        printf("%d   ",arr[front]);
+        front++;
+    }
+}
+int main(){
+    int x,s;
+    
+    printf("enter the value to insert");
+    scanf("%d",&x);
+    enqueue_rear(x);
+    enqueue_rear(3);
+    printf("front val %d rear val %d",front,rear);
+    display();
+}
