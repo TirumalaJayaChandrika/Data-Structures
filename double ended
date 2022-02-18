@@ -1,41 +1,95 @@
 #include<stdio.h>
-#define n 10
-int arr[n];
-int front=0,rear=0;
-void enqueue_rear(int x){
-    if(front==0 && rear==n-1 || front==rear+1)
-    printf("stack is full");
-    else if(front==0 && rear==0){
-    arr[rear++]=x;
-    }
-    else if(rear==n-1){
-    rear=0;
-    arr[rear++]=x;
-    }
-    else{
-        arr[rear++]=x;
-    }
-    
+#define n 7
+int arr[n],front=0,rear=0,count=0;
+void enqueue_rear(){
+        int val;
+        printf("enter an element to insert at end");
+        scanf("%d",&val);
+        if(count==n){
+                printf("qwueue is full\n");
+        }
+        else{
+                if(front==0 && rear==0){
+                arr[rear++]=val;
+
+        }
+        else if(rear==n-1){
+                arr[rear]=val;
+                rear=0;
+
+        }
+        else{
+                arr[rear++]=val;
+
+        }
+        count++;
+        }
+
+}
+void enqueue_front (){
+        if(count==n){
+                printf("ur array is full\n");
+        }
+        else{
+                printf("enter a value to insert at font: ");
+                scanf("%d",&ele);
+                if(front==0){
+                        front=n-1;
+                        arr[front]=ele;
+                        front--;
+                }
+                else{
+                        arr[front--]=ele;
+                }
+                count++;
+        }
 }
 void dequeue_front(){
-    if(front==0 && rear==0 || front==rear){
-        printf("empty");
-    }
+        int ele;
+        if(count==0){
+                printf("queue if empty\n");
+        }
+        else{
+                if(front==rear+1){
+                front=rear=0;
+                printf("hiii");
+        }
+        else if(front==n-1 && rear>=0){
+                ele=arr[front];
+                front=0;
+                printf("chand");
+        }
+        else {
+                ele=arr[front++];
+                printf("jaya");
+        }
+        printf("poped elemnt from front is: %d",ele);
+
+        count--;
+        }
 }
+void dequeue_rear(){
+        if(count==0){
+                printf("queue is empty\n");
+        }
+        }
 void display(){
-    printf("\nur array is:");
-    while(front<rear){
-        printf("%d   ",arr[front]);
-        front++;
-    }
+        printf("your array after performing insert and deleting operations :\n");
+        printf("coun t-%d\n",count);
+        while(count>0){
+
+                printf("%d  ",arr[front]);
+                front=(front+1)%n;
+                count--;
+        }
 }
 int main(){
-    int x,s;
-    
-    printf("enter the value to insert");
-    scanf("%d",&x);
-    enqueue_rear(x);
-    enqueue_rear(3);
-    printf("front val %d rear val %d",front,rear);
-    display();
+        for(int i=0;i<n-3;i++)
+        enqueue_rear();
+
+        dequeue_front();
+        enqueue_front();
+        enqueue_front();
+        display();
+
 }
