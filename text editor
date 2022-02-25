@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#define NULL ((void*)0)
+
+int main() {
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int q;
+    scanf("%d",&q);
+    char ch[1000];
+    for(int i=0;i<q;i++) {
+        int t,prev,len;
+        char s[1000],str[1000];
+        int length;
+        scanf("%d",&t);
+        if(t==1){
+            scanf("%s",s);
+            len=strlen(s);
+            strcat(ch,s);
+            length=strlen(ch);
+        }
+        else if(t==2){
+            int l,j;
+            scanf("%d",&l);
+            int k=length-l;
+            for(j=0;j<l;j++){
+                str[j]=ch[k];
+                k++;
+            }
+            str[j]='\0';
+            ch[length-l]='\0';
+            length=length-l;
+        }
+        else if(t==3){
+            int a;
+            scanf("%d",&a);
+            printf("%c\n",ch[a]);
+        }
+        else{
+            if(prev==2){
+                strcat(ch,str);
+                length=strlen(ch);
+            }else{
+                ch[length-len]='\0';
+                length=length-len;
+            }
+        }
+        if(t==2 || t==1)
+        prev=t;
+        
+    }
+    printf("%s",ch);   
+    return 0;
+    
+}
+
