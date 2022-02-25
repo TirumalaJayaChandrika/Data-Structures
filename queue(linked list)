@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+        int data;
+        struct node *next;
+}*newnode,*temp,*head=NULL,*tail;
+void push(int val){
+        newnode=(struct node*)malloc(sizeof(struct node));
+        newnode->data=val;
+        newnode->next=NULL;
+        if(head==NULL){
+                head=newnode;
+                tail=newnode;
+        }
+        else{
+                tail->next=newnode;
+                tail=newnode;
+        }
+}
+void pop(){
+        if(head==NULL){
+                printf("queue is empty \n");
+        }
+        else{
+        temp=head;
+        head=head->next;
+        temp->next=NULL;
+        printf("your poped element is %d",temp->data);
+        }
+}
+void display(){
+        if(head==NULL){
+                printf("yuor queue ios empty\n");
+        }else{
+        printf("your queue is:  ");
+        temp=head;
+        while(temp){
+                printf("%d ",temp->data);
+                temp=temp->next;
+        }
+        }
+}
+
+int main(){
+        int ch;
+        while(1){
+        printf("\nmenu:\n1-push\n2-pop\n3-display\n");
+        printf("enter your choice: ");
+        scanf("%d",&ch);
+        int a,b;
+        switch(ch){
+                case 1: printf("enter a number :");
+                        scanf("%d",&a);
+                        push(a);
+                        break;
+                case 2: pop();
+                        break;
+                case 3: display();
+                        break;
+                default:printf("you are out of the loop");
+        }
+        if(ch>3)
+                break;
+        }
+}
+
+
+outpu:
+
+
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 1
+enter a number :1
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 1
+enter a number :2
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 1
+enter a number :2
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 1
+enter a number :3
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 3
+your queue is:  1 2 2 3
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 2
+your poped element is 1
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 2
+your poped element is 2
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 2
+your poped element is 2
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 2
+your poped element is 3
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 2
+queue is empty
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 3
+yuor queue ios empty
+
+menu:
+1-push
+2-pop
+3-display
+enter your choice: 6
+you are out of the loop
