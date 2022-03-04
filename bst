@@ -3,7 +3,7 @@
 struct node{
         int data;
         struct node *left,*right;
-}*newnode,*root=NULL;
+}*newnode,*root=NULL,*temp,*temp1;
 struct node* new_node( int val){
         newnode=(struct node*)malloc(sizeof(struct node*));
         newnode->data=val;
@@ -30,9 +30,43 @@ void inorder(struct node* root){
     }
     return;
 }
-
+struct node* minValueNode(root){
+    temp1=root;
+    while(temp1 && temp1->left!=NULL){
+        temp1=temp1->left;
+    }
+    return temp1;
+}
+struct node* delete_node(struct node* root,int val){
+    if(root==NULL){
+        return root;
+        
+    }
+    if(val<root->data){
+        root->left=delete_node(root->left,val);
+    }else if(val>root->data){
+        root->right=delete_node(root->right,val);
+    }else{
+        if(root->left==NULL){
+            temp=root->right;
+            free(root);
+            return temp;
+        }else if(root->right==NULL){
+            temp=root->right;
+            free(root);
+            return temp;
+        }else{
+            temp=minValueNode(root->right);
+            root->data=temp->data;
+            root->right=delete_node(root->right,temp->data);
+            
+        }
+        
+    }
+    return temp;
+}
 void main(){
-        for(int i=0;i<4;i++){
+        for(int i=0;i<8;i++){
                 printf("enter value: ");
                 int a;
                 scanf("%d",&a);
@@ -40,4 +74,6 @@ void main(){
         }
       
         inorder(root);
+        root=delete_node(root,);
+         inorder(root);
 }
