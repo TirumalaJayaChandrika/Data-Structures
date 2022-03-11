@@ -1,0 +1,105 @@
+#include<stdlib.h>
+#include<stdio.h>
+
+struct node{
+    int key;
+    struct node *left;
+    struct node *right;
+    int h;
+};
+int max(int a,int b){
+    return a>b?a:b;
+}
+int height(struct node *root){
+    if(root==NULL){
+        return 0;
+    }
+    return root->h;
+}
+struct node* newNode(int key){
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->key=key;
+    newnode->right=newnode->left=NULL;
+    newnode->h=1;
+    return newnode;
+}
+int getBalance(struct node* root){
+    if(root==NULL){
+        return 0;
+    }
+    return height(root->left)-height(root->right);
+}
+struct node* rightRotate(struct node *root){
+    struct node *x=root->right;
+    root->right=x->left;
+    x->left=root;
+    
+    root->h=max(height(root->left),height(root->right))+1;
+    x->h=max(height(x->right),height(x->left))+1;
+    return x;
+}
+struct node* leftRotate(struct node *root){
+    struct node *x=root->left;
+    root->left=x->right;
+    x->right=root;
+    root->h=max(height(root->left),height(root->right))+1;
+    x->h==max(height(x->right),height(x->left))+1;
+    return x;
+}
+struct node *insert(struct node *root,int key){
+    if(root==NULL){
+        return newNode(key);
+    }else if(key>root->key)
+    root->right=insert(root->right,key);
+    else if(key<root->key)
+    root->left=insert(root->left,key);
+    else{
+        return root;
+    }
+    int bal=getBalance(root);
+    if(bal>1 && key<root->left->key)
+    return leftRotate(root);
+    else if(bal<-1 && key>root->right->key)
+    return rightRotate(root);
+    else if(bal>1 && root->left->key<key){
+        root->right=rightRotate(root->right);
+        printf("jaaaaaaaaaaas");
+        return leftRotate(root->left);
+    }
+    else if(bal<-1 && root->right->key>key){
+        printf("wwwwwwwdsbhdb");
+        root->left=leftRotate(root->left);
+        return rightRotate(root->right);
+    }
+    return root;
+    
+}
+void inorder(struct node *root){
+    if(root!=NULL){
+        inorder(root->left);
+        printf("%d ",root->key);
+        inorder(root->right);
+    }
+    return;
+}
+void postorder(struct node *root){
+    if(root!=NULL){
+        printf("%d ",root->key);
+        postorder(root->left);
+        postorder(root->right);
+    }
+}
+int main(){
+    struct node *root=NULL;
+    root=insert(root, 2);
+  root = insert(root, 1);
+  root = insert(root, 7);
+  root = insert(root, 4);
+  root = insert(root, 5);
+  root = insert(root, 3);
+  root = insert(root, 8);
+  printf("inorder:");
+inorder(root);
+printf("\npostoredr");
+postorder(root);
+}
