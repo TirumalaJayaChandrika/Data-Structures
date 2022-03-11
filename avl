@@ -65,11 +65,9 @@ struct node *insert(struct node *root,int key){
     return rightRotate(root);
     else if(bal>1 && root->left->key<key){
         root->right=rightRotate(root->right);
-        printf("jaaaaaaaaaaas");
         return leftRotate(root->left);
     }
     else if(bal<-1 && root->right->key>key){
-        printf("wwwwwwwdsbhdb");
         root->left=leftRotate(root->left);
         return rightRotate(root->right);
     }
