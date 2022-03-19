@@ -1,0 +1,45 @@
+#include<stdio.h>
+void adjust(int a[],int i,int n){
+    int j=2*i;
+    int ele=a[i];
+    while(j<n){
+        if(j<n && a[j]<a[j+1])
+        j+=1;
+        if(a[j]<ele)
+        break;
+        a[j/2]=a[j];
+        j=2*j;
+    }
+    a[j/2]=ele;
+}
+void heapify(int a[],int n){
+    printf("hhhh");
+    for(int i=n/2;i>=1;i--){
+        adjust(a,i,n);
+        display(a,n);
+        printf("\n");
+    }
+}
+void heapsort(int a[] , int n){
+    heapify(a,n);
+    for(int i=n;i>1;i--){
+        int k=a[i];
+        a[i]=a[1];
+        a[1]=k;
+        adjust(a,1,i-1);
+    }
+}
+void display(int a[],int n){
+    for(int i=1;i<=n;i++){
+        printf("%d ",a[i]);
+    }
+}
+void main(){
+    int n=7;
+    int a[n+1];
+    for(int i=1;i<=n;i++){
+        scanf("%d",&a[i]);
+    }
+    heapsort(a,n);
+    display(a,n);
+}
