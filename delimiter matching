@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<ctype.h>
+#include<string.h>
+char a[20];
+int top=-1;
+void push(char x){
+    a[++top]=x;
+}
+char pop(){
+    char x=a[top--];
+    return x;
+}
+int isEmpty(){
+    if(top==-1)
+    return 1;
+    return 0;
+}
+void isBalance(char *s){
+    int l=strlen(s);
+    if(l%2!=0){
+        printf("not balanced");
+        return;
+    }
+    for(int i=0;i<l;i++){
+        if(s[i]=='{' || s[i]=='(' || s[i]=='[')
+        push(s[i]);
+        else{
+            char x=pop();
+            if(s[i]=='}' && x!='{'){
+                printf("not balanced");
+                return;
+            }else if(s[i]==')' && x!='('){
+                printf("not balanced");return;
+            }else if(s[i]==']' && x!='['){
+                printf("not balanced");
+                return;
+            }
+        }
+        
+    }
+    if(isEmpty()==1){
+        printf("balanced");
+        return;
+    }else{
+        printf("not balanced");
+        return;
+    }
+}
+int main(){
+    char in[20];
+    printf("enter ");
+    scanf("%s",in);
+    isBalance(in);
+    
+    return 0;
+}
