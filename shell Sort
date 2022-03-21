@@ -1,0 +1,24 @@
+#include<stdio.h>
+void main(){
+    int n;
+    printf("enter n valuye");
+    scanf("%d",&n);
+    int a[n];
+    for(int i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    int gap=n/2,temp;
+    while(gap>0){
+    for(int i=gap;i<n;i+=1){
+        temp=a[i];
+        int j;
+        for(j=i;j>=gap && a[j-gap]>=temp;j-=gap){
+            a[j]=a[j-gap];
+        }
+        a[j]=temp;
+    }
+    gap/=2;
+    }
+    for(int i=0;i<n;i++){
+        printf("%d ",a[i]);
+    }
+}
