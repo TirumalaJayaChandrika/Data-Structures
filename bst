@@ -1,244 +1,163 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 struct node{
-        int data;
-        struct node *left,*right;
+    int data;
+    struct node *left,*right;
 };
-struct node* new_node( int val){
-    struct node *newnode;
-        newnode=(struct node*)malloc(sizeof(struct node*));
-        newnode->data=val;
-        newnode->left=newnode->right=NULL;
-        return newnode;
+int r=-1,f=-1;
+struct node *a[20];
+struct node* new_node( int data){
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=data;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
 }
-struct node* insert(struct node *root, int val){
-        if(root==NULL)
-                return new_node(val);
-        else if(val > root->data){
-             root->right=insert(root->right,val);   
-             
-        }
-        else
-         root->left=insert(root->left,val);
-            
-        return root;
-}
-void inorder(struct node* root){
-    if(root!=NULL){
-      inorder(root->left);
-        printf("%d ",root->data);
-        inorder(root->right);
-    }
-    return;
-}
-void postorder(struct node* root){
-    if(root!=NULL){
-      postorder(root->left);
+struct node* insert(struct node *root,int data){
+    
+    if(root==NULL){
+       root= new_node(data);
+    }else if(root->data>data){
+        root->left=insert(root->left,data);
         
-        postorder(root->right);
-        printf("%d ",root->data);
+    }else{
+        root->right=insert(root->right,data);
     }
-    return;
+    return root;
 }
-void preorder(struct node* root){
-    if(root!=NULL){
-        printf("%d ",root->data);
-      preorder(root->left);
-        preorder(root->right);
+int height(struct node *root){
+    if(root==NULL){
+        return -1;
     }
+    int lc,rc,h;
+    lc=height(root->left);
+    rc=height(root->right);
+    if(lc>rc){
+        h=lc+1;
+    }else{
+        h=rc+1;
+    }
+    return h;
+}
+void search(struct node *temp, int val){
+    if(temp!=NULL){
+        if(temp->data>val)
+        search(temp->left,val);
+        else if(temp->data<val)
+        search(temp->right,val);
+        else if(temp->data==val){
+            printf("element found\n");
+            return;
+        }
+       
+    }
+    else if(temp==NULL){
+    printf("element not found\n");
     return;
+    }
 }
 struct node* minValueNode(struct node *root){
-    struct node *temp1=root;
-    while(temp1 && temp1->left!=NULL){
-        temp1=temp1->left;
+    struct node *temp=root;
+    while(temp->left!=NULL){
+        temp=temp->left;
     }
-    return temp1;
+    return temp;
 }
-struct node* delete_node(struct node* root,int val){
+struct node* deletion(struct node *root,int val){
     struct node *temp;
     if(root==NULL){
         return root;
-        
-    }
-    if(val<root->data){
-        root->left=delete_node(root->left,val);
-    }else if(val>root->data){
-        root->right=delete_node(root->right,val);
+    }else if(root->data>val){
+        root->left=deletion(root->left,val);
+    }else if(root->data<val){
+        root->right=deletion(root->right,val);
     }else{
-        if(root->left==NULL && root->right==NULL){
+        if(root->right==NULL && root->left==NULL){
             free(root);
             return NULL;
-        }else if(root->left==NULL || root->right==NULL){
-        if(root->left==NULL){
-            root=root->right;
-        }else {
-            root=root->right;
-        }
-        return root;
+        }else if(root->right==NULL || root->left==NULL){
+            if(root->right==NULL){
+                temp=root->left;
+            }
+            else{
+                temp=root->right;
+            }
+                free(root);
+                return temp;
         }else{
             temp=minValueNode(root->right);
             root->data=temp->data;
-            root->right=delete_node(root->right,temp->data);
-            
-        }
+            root->right=deletion(root->right,temp->data);
         }
         
-    
+        
+    }
     return root;
 }
-void search(struct node *root,int x){
-    if(root!=NULL){
-        if(x>root->data){
-            search(root->right,x);
-        }else if(x<root->data){
-            search(root->left,x);
-        }else if(root->data==x){
-            printf("element found");
-            return;
-        }
-        
-    }else
-    printf("element not found");
+void inorder(struct node *root){
+    struct node *temp=root;
+    if(temp!=NULL){
+        inorder(temp->left);
+        printf("%d ",temp->data);
+        inorder(temp->right);
+    }
+}
+void enqueue(struct node *root){
+    if(f==-1 && r==-1){
+        r=0;
+    }else{
+        r++;
+    }
+    a[r]=root;
+}
+struct node* dequeue(){
+    if(f==r){
+        printf("queue is empty");
+    }
+    f++;
+    return a[f];
+}
+int isEmpty(){
+    if(f==-1 && r==-1 || f==r)
+    return 1;
+    return 0;
+}
+void levelOrder(struct node *root){
+    enqueue(root);
+    while(isEmpty()==0){
+        struct node *z=dequeue();
+        printf("%d ",z->data);
+        if(z->left!=NULL)
+        enqueue(z->left);
+        if(z->right!=NULL)
+        enqueue(z->right);
+    }
 }
 void main(){
+    int n;
+    printf("enter elements no");
+    scanf("%d",&n);
     struct node *root=NULL;
-       for(int i=0;i<7;i++){
-                printf("enter value: ");
-                int a;
-                scanf("%d",&a);
-                root=insert(root,a);
-        }
-      
-        inorder(root);
-        printf("postorder:");
-        postorder(root);
-        printf("preorder");
-        preorder(root);
-        root=delete_node(root,45);
-        printf("\n after deletion");
-         inorder(root);
-         search(root,3);
-}
-#include<stdio.h>
-#include<stdlib.h>
-struct node{
+    for(int i=0;i<n;i++){
         int data;
-        struct node *left,*right;
-};
-struct node* new_node( int val){
-    struct node *newnode;
-        newnode=(struct node*)malloc(sizeof(struct node*));
-        newnode->data=val;
-        newnode->left=newnode->right=NULL;
-        return newnode;
-}
-struct node* insert(struct node *root, int val){
-        if(root==NULL)
-                return new_node(val);
-        else if(val > root->data){
-             root->right=insert(root->right,val);   
-             
-        }
-        else
-         root->left=insert(root->left,val);
-            
-        return root;
-}
-void inorder(struct node* root){
-    if(root!=NULL){
-      inorder(root->left);
-        printf("%d ",root->data);
-        inorder(root->right);
+    printf("enter element");
+    scanf("%d",&data);
+        root=insert(root,data);
     }
-    return;
+    inorder(root);
+   printf("\nheight=%d",height(root));
+    int val;
+    printf("enter element");
+    scanf("%d",&val);
+   search(root,val);
+   printf("enter element to delete:");
+   scanf("%d",&val);
+    deletion(root,val);
+   printf("\nafter deletion: ");
+   inorder(root);
+   printf("\n levelorder: ");
+   levelOrder(root);
 }
-void postorder(struct node* root){
-    if(root!=NULL){
-      postorder(root->left);
-        
-        postorder(root->right);
-        printf("%d ",root->data);
-    }
-    return;
-}
-void preorder(struct node* root){
-    if(root!=NULL){
-        printf("%d ",root->data);
-      preorder(root->left);
-        preorder(root->right);
-    }
-    return;
-}
-struct node* minValueNode(struct node *root){
-    struct node *temp1=root;
-    while(temp1 && temp1->left!=NULL){
-        temp1=temp1->left;
-    }
-    return temp1;
-}
-struct node* delete_node(struct node* root,int val){
-    struct node *temp;
-    if(root==NULL){
-        return root;
-        
-    }
-    if(val<root->data){
-        root->left=delete_node(root->left,val);
-    }else if(val>root->data){
-        root->right=delete_node(root->right,val);
-    }else{
-        if(root->left==NULL && root->right==NULL){
-            free(root);
-            return NULL;
-        }else if(root->left==NULL || root->right==NULL){
-        if(root->left==NULL){
-            root=root->right;
-        }else {
-            root=root->right;
-        }
-        return root;
-        }else{
-            temp=minValueNode(root->right);
-            root->data=temp->data;
-            root->right=delete_node(root->right,temp->data);
-            
-        }
-        }
-        
-    
-    return root;
-}
-void search(struct node *root,int x){
-    if(root!=NULL){
-        if(x>root->data){
-            search(root->right,x);
-        }else if(x<root->data){
-            search(root->left,x);
-        }else if(root->data==x){
-            printf("element found");
-            return;
-        }
-        
-    }else
-    printf("element not found");
-}
-void main(){
-    struct node *root=NULL;
-       for(int i=0;i<7;i++){
-                printf("enter value: ");
-                int a;
-                scanf("%d",&a);
-                root=insert(root,a);
-        }
-      
-        inorder(root);
-        printf("postorder:");
-        postorder(root);
-        printf("preorder");
-        preorder(root);
-        root=delete_node(root,45);
-        printf("\n after deletion");
-         inorder(root);
-         search(root,3);
-}
+
+
