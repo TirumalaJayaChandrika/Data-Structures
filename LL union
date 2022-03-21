@@ -1,0 +1,108 @@
+#include<stdio.h>
+#include<stdlib.h>
+int n;
+struct node {
+    int data;
+    struct node *next;
+}*newnode;
+struct node* newNode(int val){
+     newnode=(struct node*)malloc(sizeof(struct node));
+        newnode->data=val;
+        newnode->next=NULL;
+        return newnode;
+}
+struct node* create(){
+     struct node *head=NULL,*tail;
+    printf("enter no of elemnts to insert: ");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        int val;
+        printf("enter elemnt:");
+        scanf("%d",&val);
+       newnode=newNode(val);
+        if(head==NULL){
+            head=newnode;
+            tail=newnode;
+        }else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+    }
+    return head;
+}
+void display(struct node *head){
+    printf("elemts are:");
+    struct node *temp=head;
+    while(temp){
+        printf("%d->",temp->data);
+        temp=temp->next;
+    }
+}
+struct node *uniono(struct node *head1,struct node *head2){
+    struct node *head3=NULL,*tail=NULL;
+    while(head1!=NULL && head2!=NULL){
+        if(head1->data<head2->data){
+            newnode=newNode(head1->data);
+            head1=head1->next;
+        }else if(head1->data==head2->data){
+            newnode=newNode(head1->data);
+            head1=head1->next;
+            head2=head2->next;
+        }else{
+            newnode=newNode(head2->data);
+            head2=head2->next;
+        }
+        if(head3==NULL){
+            head3=newnode;
+            tail=newnode;
+        }else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+    }
+    if(head1 || head2){
+        if(head1!=NULL){
+            tail->next=head1;
+        }else{
+            tail->next=head2;
+        }
+    }
+    return head3;
+}
+int main(){
+    
+   /* while(1){
+      int ch;
+    printf("enter choice");
+    scanf("%d",&ch);
+    if(ch>6)
+    break;
+    
+    switch(ch){
+        case 1:head=create();
+                break;
+        case 2: display(head);
+                break;
+        case 3: insert();
+                break;
+        case 4: delete();
+                break;
+        case 5: reverse();
+                break;
+        case 6: head=sort();
+                break;
+                
+    }
+    
+    }*/
+    struct node* head1=NULL;
+    struct node *head2=NULL,*head3; 
+    head1=create();
+    
+    display(head1);
+    head2=create();
+    display(head2);
+    head3=uniono(head1,head2);
+    display(head3);
+}
+
